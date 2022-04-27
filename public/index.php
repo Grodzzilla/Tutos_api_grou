@@ -9,6 +9,7 @@ $length = strlen(BASE_PATH) + 1;
 $uri = substr($_SERVER['REQUEST_URI'], $length) ;
 $method = $_SERVER['REQUEST_METHOD'];
 
+
 switch(true) {
 
     case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'GET':
@@ -28,6 +29,37 @@ switch(true) {
         return $controller->index();
 
         break;
+
+     case preg_match('#^tutos#', $uri) && $method == 'POST':
+
+            $controller = new tutoController();
+    
+            return $controller->add();
+    
+            break;
+
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'PATCH':
+
+        $id = $matches[1];
+
+        $controller = new tutoController();
+
+        return $controller->update($id);
+
+        break;
+    
+    case preg_match('#^tutos/(\d+)$#', $uri, $matches) && $method == 'DELETE':
+
+        $id = $matches[1];
+    
+        $controller = new tutoController();
+    
+        return $controller->delete($id);
+    
+
+        break;
+
+    
 
     default:
     
