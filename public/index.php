@@ -59,6 +59,23 @@ switch(true) {
 
         break;
 
+    case preg_match('#^tutos/pages((\?)|$)#', $uri) && $method == 'GET':
+
+        if(isset($_GET["page"]) && $_GET["page"] > 0 ) {
+        $page = $_GET["page"];
+        $controller = new tutoController();
+        return $controller->findByPage($page);
+
+        }
+        else{
+            http_response_code(404);
+            echo json_encode('erreur page');
+        }
+
+
+        break;
+
+    
     
 
     default:

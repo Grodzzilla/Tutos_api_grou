@@ -103,7 +103,28 @@ class TutoManager extends Manager
         $sth->execute();
     }
 
+public function findByPage($page)
+    {
+        $dbh = static::connectDb();
+        $parPage =5;
+        $offSet = ($page * $parPage) - $parPage;
 
+        $sth = $dbh->prepare('SELECT * from tutos limit 5 Offset '.$offSet );
+        $sth->execute();
+        $tutos =[];
+
+        while($row =$sth->fetch(\PDO::FETCH_ASSOC)){
+            $tuto = new Tuto();
+            $tuto->setId($row['id']);
+            $tuto->setTitle($row['title']);
+            $tuto->setDescription($row['description']);
+            $tuto->setCreatedAt($row["createdAt"]);
+            $tutos[] = $tuto;
+            }
+            return $tutos;
+            
+
+    }
 
 
 
